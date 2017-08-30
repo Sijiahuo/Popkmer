@@ -235,12 +235,33 @@ public:
         return insert(s.c_str());
     }
 
-    // basic query functions
-    bool has_key(const kmer_key_t& k) { return (kmap.find(k) != kmap.end()); }
+   // basic query functions
+    bool has_key(kmer_key_t k) { return (kmap.find(k) != kmap.end()); }
+    bool has_key(const string s) {
+        kmer_key_t key;
+        for (int i = 0; i < K; i++) {
+            key.acgt_set(i, c2i[s[i]]);
+        }
+        return (has_key(key));
+    }
 
-    kmap_it_t find(const kmer_key_t& k) { return kmap.find(k); }
+    kmap_it_t find(kmer_key_t k) { return kmap.find(k); }
+    kmap_it_t find(const string s) {
+        kmer_key_t key;
+        for (int i = 0; i < K; i++) {
+            key.acgt_set(i, c2i[s[i]]);
+        }
+        return (find(key));
+    }
 
-    kmer_value_t& value_at(const kmer_key_t& k) { return kmap[k]; }
+    kmer_value_t value_at(kmer_key_t k) { return kmap[k]; }
+    kmer_value_t value_at(const string s) {
+        kmer_key_t key;
+        for (int i = 0; i < K; i++) {
+            key.acgt_set(i, c2i[s[i]]);
+        }
+        return (value_at(key));
+    }
 
 
     void printMap() {
