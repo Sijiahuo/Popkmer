@@ -1,0 +1,70 @@
+class varGraph {
+private:
+    // Map to store graph and pointer to reference
+    std::unordered_map<kmer_key_t, var_value_t, kmer_key_hasher> vmap;
+    kmerGraph* refGraph;
+
+public:
+    std::unordered_map<kmer_key_t, var_value_t, kmer_key_hasher>::iterator vmap_it_t;
+    bool cflag = false;
+
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Different Constructors for varGraph. First one still needs to be finished
+    varGraph(const char* ref_graph_name, const char* var_graph_name);
+    varGraph(const char* ref_graph_name);
+    varGraph(kmerGraph* r);
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Deletes refGraph if it was created by new
+    ~varGraph();
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Reads from fastq files. 
+    // If kmer meets quality standard and isn't found in reference, inserts into hashtable
+    void fq_read(string filename); 
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Calculates quality of input string. Returns true if it meets quality threshold
+    bool quality(string q);
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Checks whether key is found in reference
+    bool isVariation(string kmer) {
+        kmer_key_t kmer_key;
+        kmer_key = StringToKey(kmer);
+        if (refGraph->has_key(kmer_key)) {
+            return false;
+        }
+        return true;
+    }
+
+
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Converts string to key. Can take pointer or string input
+    kmer_key_t StringToKey(const char* String);
+    kmer_key_t StringToKey(const string & String);
+
+    // Requires: Key in hashtable
+    // Modifies: Nothing
+    // Effects: Outputs key
+    void PrintKey(kmer_key_t Key);
+    
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Prints map in key value pairs. Value printed is count of kmer
+    void printMap();
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Returns Total number of nodes as well as how many are unique vs non-unique
+    void nodes();
+
+};
