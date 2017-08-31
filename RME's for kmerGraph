@@ -1,0 +1,73 @@
+class kmerGraph {
+private:
+    // Map to store graph
+    std::unordered_map<kmer_key_t, kmer_value_t, kmer_key_hasher> kmap;
+
+public:
+    typedef std::unordered_map<kmer_key_t, kmer_value_t, kmer_key_hasher>::iterator kmap_it_t;
+
+    // Requires: String of pointer to start of string
+    // Modifies: Nothing
+    // Effects: Inserts key value pair into hash table
+    int32_t insert(const char* s);
+    int32_t insert(const std::string& s);
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Returns true if key is found in hash table
+    bool has_key(const kmer_key_t& k);
+
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Returns iterator to key if found or end of map
+    kmap_it_t find(const kmer_key_t& k);
+
+    // Requires: Key present in hashtable
+    // Modifies: Nothing
+    // Effects: Returns value associated with a given key
+    kmer_value_t& value_at(const kmer_key_t& k);
+
+    // Requires: Key present in hashtable
+    // Modifies: Nothing
+    // Effects: Outputs hashtable in key value pairs. 
+    // Can output count, prev base, or next base for value. 
+
+    void printMap();
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Returns complemantary base to input base
+    char compBase(char c);
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Returns complemantary sequence to input sequence
+    string stringComplement(string s);
+
+    // Requires: Nothing
+    // Modifies: cin and cout
+    // Effects: Returns string read from user inputed file. Can cout sequence if prompted.
+    string stringReader();
+
+    // Requires: Nothing
+    // Modifies: Output file
+    // Effects: Creates file with user given name or writes to existing file. 
+    // Writes in hashtable converted to binary. 
+    bool storeToFile(string filename);
+
+    // Requires: Nothing
+    // Modifies: Cin, kmap
+    // Effects: Loads graph from user inputed file into hashtable
+    bool loadFromFile();
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Returns kmer with the largest count
+    void largestCount();
+
+    // Requires: Nothing
+    // Modifies: Nothing
+    // Effects: Returns Total number of nodes as well as how many are unique vs non-unique
+    void nodes();
+
+};
