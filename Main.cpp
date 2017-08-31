@@ -775,6 +775,14 @@ public:
                 // replaces old value with new one
                 value = (uint32_t)ivalue.count;
             }
+            else if ((uint32_t)ivalue.count == value) {
+                // Adds new key to old one
+                const kmer_key_t& ikey = its->first;
+                skey += ", ";
+                for (int i = 0; i < K; i++) {
+                    skey += i2c[ikey.acgt_at(i)];
+                }
+            }
 
             its++;
         }
