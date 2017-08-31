@@ -265,16 +265,60 @@ public:
 
 
     void printMap() {
+        int choice;
+        cout << "Which value component would you like to print?" << endl << "1) Count"
+            << endl << "2) Previous base" << endl << "3) Next base" << endl;
+        cin >> choice;
+
         std::unordered_map<kmer_key_t, kmer_value_t, kmer_key_hasher> ::iterator its = kmap.begin();
         while (its != kmap.end()) {
             const kmer_key_t& ikey = its->first;
             for (int i = 0; i < K; i++) {
                 cout << i2c[ikey.acgt_at(i)];
             }
+
             const kmer_value_t& ivalue = its->second;
-            cout << " :: " << (uint32_t)ivalue.count << " ";
-            //cout << " :: " << (uint32_t)ivalue.acgt_prev << " ";
-            //cout << " :: " << (uint32_t)ivalue.acgt_next << " ";
+            if (choice == 1) {
+                cout << " :: " << (uint32_t)ivalue.count << " ";
+            }
+            else if (choice == 2) {
+                char base;
+                if ((uint32_t)ivalue.acgt_prev == 0) {
+                    base = 'Z';
+                }
+                else if ((uint32_t)ivalue.acgt_prev == 1) {
+                    base = 'A';
+                }
+                else if ((uint32_t)ivalue.acgt_prev == 2) {
+                    base = 'C';
+                }
+                else if ((uint32_t)ivalue.acgt_prev == 4) {
+                    base = 'G';
+                }
+                else if ((uint32_t)ivalue.acgt_prev == 8) {
+                    base = 'T';
+                }
+                cout << " :: " << base << " ";
+            }
+            else if (choice == 3) {
+                char base;
+                if ((uint32_t)ivalue.acgt_next == 0) {
+                    base = 'Z';
+                }
+                else if ((uint32_t)ivalue.acgt_next == 1) {
+                    base = 'A';
+                }
+                else if ((uint32_t)ivalue.acgt_next == 2) {
+                    base = 'C';
+                }
+                else if ((uint32_t)ivalue.acgt_next == 4) {
+                    base = 'G';
+                }
+                else if ((uint32_t)ivalue.acgt_next == 8) {
+                    base = 'T';
+                }
+                cout << " :: " << base << " ";
+            }
             its++;
         }
     }
